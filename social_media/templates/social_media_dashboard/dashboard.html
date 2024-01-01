@@ -1,0 +1,174 @@
+<!-- templates/social_media_dashboard/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- <h2>Social Media Dashboard</h2>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Twitter Posts</h3>
+      <ul class="list-group">
+        {% for post in twitter_posts %}
+          <li class="list-group-item">
+            {{ post.text }}
+            <button class="btn btn-sm btn-primary" onclick="likePost('twitter', {{ post.id }})">Like</button>
+            <button class="btn btn-sm btn-secondary" onclick="commentPost('twitter', {{ post.id }})">Comment</button>
+            <button class="btn btn-sm btn-success" onclick="sharePost('twitter', {{ post.id }})">Share</button>
+            <div id="likes{{ post.id }}">Likes: {{ post.likes }}</div>
+            <div id="comments{{ post.id }}">Comments: {{ post.comments }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Facebook Posts</h3>
+      <ul class="list-group">
+        {% for post in facebook_posts %}
+          <li class="list-group-item">
+            {{ post.text }}
+            <button class="btn btn-sm btn-primary" onclick="likePost('facebook', {{ post.id }})">Like</button>
+            <button class="btn btn-sm btn-secondary" onclick="commentPost('facebook', {{ post.id }})">Comment</button>
+            <button class="btn btn-sm btn-success" onclick="sharePost('facebook', {{ post.id }})">Share</button>
+            <div id="likes{{ post.id }}">Likes: {{ post.likes }}</div>
+            <div id="comments{{ post.id }}">Comments: {{ post.comments }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function likePost(platform, postId) {
+      $.ajax({
+        url: `/${platform}/like/${postId}/`,
+        method: 'GET',
+        success: function(data) {
+          $(`#likes${postId}`).text(`Likes: ${data.likes}`);
+        }
+      });
+    }
+
+    function commentPost(platform, postId) {
+      var commentText = prompt('Enter your comment:');
+      if (commentText !== null) {
+        $.ajax({
+          url: `/${platform}/comment/${postId}/`,
+          method: 'POST',
+          data: { comment_text: commentText },
+          success: function(data) {
+            $(`#comments${postId}`).text(`Comments: ${data.comments}`);
+          }
+        });
+      }
+    }
+
+    function sharePost(platform, postId) {
+      $.ajax({
+        url: `/${platform}/share/${postId}/`,
+        method: 'GET',
+        success: function(data) {
+          alert(data.message);
+        }
+      });
+    }
+  </script> -->
+
+
+  {% if user.is_authenticated %}
+  <!-- Display content for authenticated users -->
+  <p>Welcome, {{ user.username }}!</p>
+  <!-- ... -->
+{% else %}
+  <!-- Display content for non-authenticated users -->
+  <p>Please log in to access the dashboard.</p>
+  <a href="{% url 'login' %}">Log in</a>
+{% endif %}  
+  <div class="container mt-5">
+    <h2 class="mb-4">Social Media Dashboard</h2>
+  
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Twitter Posts</h3>
+        <ul class="list-group">
+          {% for post in twitter_posts %}
+            <li class="list-group-item">
+              <div class="post-content">
+                {{ post.text }}
+                <div class="post-actions">
+                  <button class="btn btn-sm btn-primary" onclick="likePost('twitter', {{ post.id }})">Like</button>
+                  <button class="btn btn-sm btn-secondary" onclick="commentPost('twitter', {{ post.id }})">Comment</button>
+                  <button class="btn btn-sm btn-success" onclick="sharePost('twitter', {{ post.id }})">Share</button>
+                </div>
+                <div class="post-metrics">
+                  <span>Likes: <span id="likes{{ post.id }}">{{ post.likes }}</span></span>
+                  <span>Comments: <span id="comments{{ post.id }}">{{ post.comments }}</span></span>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h3>Facebook Posts</h3>
+        <ul class="list-group">
+          {% for post in facebook_posts %}
+            <li class="list-group-item">
+              <div class="post-content">
+                {{ post.text }}
+                <div class="post-actions">
+                  <button class="btn btn-sm btn-primary" onclick="likePost('facebook', {{ post.id }})">Like</button>
+                  <button class="btn btn-sm btn-secondary" onclick="commentPost('facebook', {{ post.id }})">Comment</button>
+                  <button class="btn btn-sm btn-success" onclick="sharePost('facebook', {{ post.id }})">Share</button>
+                </div>
+                <div class="post-metrics">
+                  <span>Likes: <span id="likes{{ post.id }}">{{ post.likes }}</span></span>
+                  <span>Comments: <span id="comments{{ post.id }}">{{ post.comments }}</span></span>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   function likePost(platform, postId) {
+      $.ajax({
+        url: `/${platform}/like/${postId}/`,
+        method: 'GET',
+        success: function(data) {
+          $(`#likes${postId}`).text(`Likes: ${data.likes}`);
+        }
+      });
+    }
+
+    function commentPost(platform, postId) {
+      var commentText = prompt('Enter your comment:');
+      if (commentText !== null) {
+        $.ajax({
+          url: `/${platform}/comment/${postId}/`,
+          method: 'POST',
+          data: { comment_text: commentText },
+          success: function(data) {
+            $(`#comments${postId}`).text(`Comments: ${data.comments}`);
+          }
+        });
+      }
+    }
+
+    function sharePost(platform, postId) {
+      $.ajax({
+        url: `/${platform}/share/${postId}/`,
+        method: 'GET',
+        success: function(data) {
+          alert(data.message);
+        }
+      });
+    }
+  </script>
+
+
+{% endblock %}

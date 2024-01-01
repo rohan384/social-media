@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+  <!-- <h2>Login</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <a href="{% url 'register' %}">New User</a><br>
+  <a href="{% url 'password_reset' %}">Forgot Password</a>  -->
+
+{% block content %}
+<html>
+<head>
+  <link rel="stylesheet" href="css\bootstrap.css">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body> 
+  <h2 class="Welcome">Welcome</h2>
+  <div class="container">
+    <div class="login-form">
+      <h2>Login</h2>
+      <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+      <a href="{% url 'register' %}" class="text-primary">New User</a><br>
+
+    </div>
+  </div>
+  <script src="js\bootstrap.js"></script>
+</body>
+
+</html>
+{% endblock %}
